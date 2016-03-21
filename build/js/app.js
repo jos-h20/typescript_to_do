@@ -91,6 +91,54 @@ var ToDoList;
         }
         return descriptions;
     };
+    //need a function to list out tasks by task type
+    // search for hometasks
+    //confirmed working
+    ToDoList.listTasksOfGivenType = function (taskType, taskCollection) {
+        var tasks = [];
+        for (var _i = 0, taskCollection_2 = taskCollection; _i < taskCollection_2.length; _i++) {
+            var task = taskCollection_2[_i];
+            if (task.constructor.name === taskType) {
+                tasks.push(task);
+            }
+        }
+        return tasks;
+    };
+    //List all tasks that are of a given priority.
+    ToDoList.listTasksOfGivenPriority = function (priority, taskCollection) {
+        var tasks = [];
+        for (var _i = 0, taskCollection_3 = taskCollection; _i < taskCollection_3.length; _i++) {
+            var task = taskCollection_3[_i];
+            if (task.priority === priority) {
+                tasks.push(task);
+            }
+        }
+        return tasks;
+    };
+    //Display the first, high priority task for the given person.
+    //what if no High priorities
+    ToDoList.listTasksForGivenPerson = function (assignee, taskCollection) {
+        var tasks = [];
+        for (var _i = 0, taskCollection_4 = taskCollection; _i < taskCollection_4.length; _i++) {
+            var task = taskCollection_4[_i];
+            if (task.assignedTo === assignee && task.priority === "High") {
+                tasks.push(task);
+            }
+        }
+        for (var _a = 0, taskCollection_5 = taskCollection; _a < taskCollection_5.length; _a++) {
+            var task = taskCollection_5[_a];
+            if (task.assignedTo === assignee && task.priority === "Medium") {
+                tasks.push(task);
+            }
+        }
+        for (var _b = 0, taskCollection_6 = taskCollection; _b < taskCollection_6.length; _b++) {
+            var task = taskCollection_6[_b];
+            if (task.assignedTo === assignee && task.priority === "Low") {
+                tasks.push(task);
+            }
+        }
+        return tasks;
+    };
 })(ToDoList || (ToDoList = {}));
 /// <reference path="to-do-classes-interfaces.ts" />
 /// <reference path="to-do-people.ts" />
@@ -108,8 +156,8 @@ var tomorrow = new Date();
 tomorrow.setDate(today.getDate() + 1);
 var nextDay = new Date();
 nextDay.setDate(today.getDate() + 2);
-tasks.push(new ToDoList.WorkTask(today, "Update blog.", "High", people.thor));
-tasks.push(new ToDoList.WorkTask(tomorrow, "Go to meeting.", "Medium", people.thor));
+tasks.push(new ToDoList.WorkTask(today, "Update blog.", "Low", people.thor));
+tasks.push(new ToDoList.WorkTask(tomorrow, "Go to meeting.", "Low", people.thor));
 tasks.push(new ToDoList.WorkTask(nextDay, "Clean ceiling.", "Low", people.thor));
 console.log(tasks);
 var thorTasks = ToDoList.describeTasksForPerson(people.thor, tasks);
@@ -118,3 +166,9 @@ for (var _i = 0, thorTasks_1 = thorTasks; _i < thorTasks_1.length; _i++) {
     var task = thorTasks_1[_i];
     console.log(task);
 }
+var hobbyTasks = ToDoList.listTasksOfGivenType("HomeTask", tasks);
+// console.log(hobbyTasks);
+var priorityTasks = ToDoList.listTasksOfGivenPriority("High", tasks);
+// console.log(priorityTasks);
+var personTasks = ToDoList.listTasksForGivenPerson(people.thor, tasks);
+console.log(personTasks);

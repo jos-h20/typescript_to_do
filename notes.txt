@@ -1,1 +1,4 @@
 $ apm install atom-typescript
+
+tasks[0].constructor.name
+"HomeTask"

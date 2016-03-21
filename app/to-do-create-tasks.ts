@@ -20,8 +20,8 @@ tomorrow.setDate(today.getDate() + 1);
 var nextDay = new Date();
 nextDay.setDate(today.getDate() + 2);
 
-tasks.push(new ToDoList.WorkTask(today, "Update blog.", "High", people.thor));
-tasks.push(new ToDoList.WorkTask(tomorrow, "Go to meeting.", "Medium", people.thor));
+tasks.push(new ToDoList.WorkTask(today, "Update blog.", "Low", people.thor));
+tasks.push(new ToDoList.WorkTask(tomorrow, "Go to meeting.", "Low", people.thor));
 tasks.push(new ToDoList.WorkTask(nextDay, "Clean ceiling.", "Low", people.thor));
 
 console.log(tasks);
@@ -33,3 +33,14 @@ console.log("Here are Thor's tasks: ");
 for (var task of thorTasks){
   console.log(task);
 }
+
+var hobbyTasks = ToDoList.listTasksOfGivenType("HomeTask", tasks);
+
+// console.log(hobbyTasks);
+
+var priorityTasks = ToDoList.listTasksOfGivenPriority("High", tasks);
+
+// console.log(priorityTasks);
+
+var personTasks = ToDoList.listTasksForGivenPerson(people.thor, tasks);
+console.log(personTasks);
